@@ -103,7 +103,7 @@ AND t2.Status = 'Developed'
 ```
 
 ## Missing data in Life Expectancy
-<img width="771" height="144" alt="image" src="https://github.com/user-attachments/assets/ac219ae3-0fe1-4791-ad43-8df658ad3aab" />
+<img width="500" height="144" alt="image" src="https://github.com/user-attachments/assets/ac219ae3-0fe1-4791-ad43-8df658ad3aab" />
 
 When looking at the data e.g. Afghanistan it looks like the age slowly increases over the years. 
 
