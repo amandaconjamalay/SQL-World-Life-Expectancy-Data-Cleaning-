@@ -34,5 +34,5 @@ FROM(
 	FROM world_life_expectancy) AS row_table
 WHERE row_num > 1;
 ```
-  <img width="300" height="50" alt="image" src="https://github.com/user-attachments/assets/e11c32f9-a58a-4106-958a-3692492d16ef" />
+  <img width="300" height="150" alt="image" src="https://github.com/user-attachments/assets/e11c32f9-a58a-4106-958a-3692492d16ef" />
 
