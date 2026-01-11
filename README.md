@@ -134,8 +134,19 @@ WHERE t1.`Life expectancy` = ''
 ```
 A self join is put in place and when we compare the life expectancy against the other tables we are able to see the last year and next year on the same row line.
 
-<img width="1287" height="144" alt="image" src="https://github.com/user-attachments/assets/03384775-4d19-463f-9676-53ed2b56b59f" />
+<img width="1467" height="173" alt="image" src="https://github.com/user-attachments/assets/415ddaad-5c9e-4ab1-bbd8-7cc9d783e301" />
 
 Now we can update the table:
+
+UPDATE world_life_expectancy t1
+JOIN world_life_expectancy t2 
+	ON t1.Country = t2.Country
+    AND t1.Year = t2.Year - 1
+JOIN world_life_expectancy t3 
+	ON t1.Country = t3.Country
+    AND t1.Year = t3.Year + 1
+SET t1.`Life expectancy` = ROUND((t2.`Life expectancy` + t3.`Life expectancy`)/2, 1)
+WHERE t1.`Life expectancy` = ''
+; 
 
 
