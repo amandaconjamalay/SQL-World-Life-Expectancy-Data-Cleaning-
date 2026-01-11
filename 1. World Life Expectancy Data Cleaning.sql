@@ -5,7 +5,6 @@ FROM world_life_expectancy
 ;
 
 # Removing duplicates
--- There should only be one country per year for each row.
 
 SELECT Country, Year, CONCAT(Country, Year), COUNT(CONCAT(Country, Year))
 FROM world_life_expectancy
@@ -15,8 +14,6 @@ HAVING COUNT(CONCAT(Country, Year)) > 1
 ;
 
 # ROW_NUMBER - We want a row number patitioned on this concatenation.
--- Row_ID gives each row a unique number but ROW_NUMBER will give the duplicates a COUNT of 2
--- If we filter wihout subquery we won't be able to identify it. 
 
 SELECT *
 FROM(
@@ -41,7 +38,7 @@ WHERE row_num > 1)
 ;
     
 # Next, we have some blanks in the status column. 
--- We already have the status from different years so we could populate them.     
+	
 SELECT * 
 FROM world_life_expectancy
 WHERE Status IS NULL OR ''
@@ -99,9 +96,6 @@ AND t2.Status = 'Developed'
 
 # Taking a look at life expectancy which have blanks 
 -- When looking at the life expectancy you can see that it is slowly increasing every year. 
--- To populate it we can take the next years and previous years life expectancy and find the average. 
--- It is only two values so it won't ruin the entire dataset but if it was more values then it might. 
--- And if we look at any exploratory data analysis using the years we would want everything populated. 
 SELECT * 
 FROM world_life_expectancy
 WHERE `Life expectancy` = ''
@@ -113,11 +107,9 @@ t2.Country, t2.Year, t2.`Life expectancy`,
 t3.Country, t3.Year, t3.`Life expectancy`,
 ROUND((t2.`Life expectancy` + t3.`Life expectancy`)/2, 1)	
 FROM world_life_expectancy t1
-# 2018 = 2019
 JOIN world_life_expectancy t2 
 	ON t1.Country = t2.Country
     AND t1.Year = t2.Year - 1
-# Now need to so the opposite
 JOIN world_life_expectancy t3 
 	ON t1.Country = t3.Country
     AND t1.Year = t3.Year + 1
