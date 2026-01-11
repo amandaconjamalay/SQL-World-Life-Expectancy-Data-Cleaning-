@@ -59,3 +59,10 @@ WHERE Status IS NULL OR ''
 ;
 ```
 <img width="400" height="250" alt="image" src="https://github.com/user-attachments/assets/6bb1f826-8838-4e7a-873f-a27177d25f4e" />
+
+Since we have all the status for each country, we are able to populate in the missing data.
+* E.g. to Afghanistan 2014 isn't populated but 2015 and 2016 is.
+
+Checking the different outputs for the status column
+<img width="152" height="107" alt="image" src="https://github.com/user-attachments/assets/ae46c404-8a89-4e08-87f0-74e3defd9400" />
+
