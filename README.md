@@ -8,7 +8,7 @@ Performing data cleaning on World Life Expectancy Dataset to remove inconsistenc
 
 ## 1. Removing Duplicates 
 Looking for countries and years that are duplicated in the table.
-* **country** and **year** used to identify each record.
+* ```MySQL **country** and **year**``` used to identify each record.
 * **CONCAT(country, year)** creates unique values (like "Brazil2022") to represent a unique Country-Year pair.
 * **COUNT(CONCAT(Country, Year))** will identify how many times that exact Country-Year combo appears.
 * **GROUP BY Country, Year, CONCAT(Country, Year)** all identical combinations are grouped together.
