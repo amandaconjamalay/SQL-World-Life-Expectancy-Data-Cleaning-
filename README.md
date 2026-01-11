@@ -63,6 +63,49 @@ WHERE Status IS NULL OR ''
 Since we have all the status for each country, we are able to populate in the missing data.
 * E.g. to Afghanistan 2014 isn't populated but 2015 and 2016 is.
 
-Checking the different outputs for the status column
+Checking the different outputs for the status column:
+
 <img width="152" height="107" alt="image" src="https://github.com/user-attachments/assets/ae46c404-8a89-4e08-87f0-74e3defd9400" />
+
+To populate we are going to use a self join:
+* ```UPDATE world_life_expectancy t1 JOIN world_life_expectancy t2``` joining the table to itself.
+* ```ON t1.Country = t2.Country``` matches rows belonging to the same country.
+* ```SET t1.Status = 'Developing'``` only t1 is updated, t2 is read only.
+* ```WHERE t1.Status = ''``` where status is blank and ```AND t2.Status <> ''``` t2 is not blank and the status is developing.
+
+
+```MySQL
+UPDATE world_life_expectancy t1
+JOIN world_life_expectancy t2
+	ON t1.Country = t2.Country
+# update is on t1
+SET t1.Status = 'Developing'
+WHERE t1.Status = ''
+AND t2.Status <> ''
+AND t2.Status = 'Developing'
+;
+```
+
+All the developing countries got updated, now we have to do the same for the developed countries, in this case we only have one which is the US.
+
+
+```MySQL
+UPDATE world_life_expectancy t1
+JOIN world_life_expectancy t2
+	ON t1.Country = t2.Country
+# update is on t1
+SET t1.Status = 'Developed'
+## identifying which ones are blank
+WHERE t1.Status = ''
+AND t2.Status <> ''
+AND t2.Status = 'Developed'
+;
+```
+
+## Missing data in Life Expectancy
+<img width="771" height="144" alt="image" src="https://github.com/user-attachments/assets/ac219ae3-0fe1-4791-ad43-8df658ad3aab" />
+
+When looking at the data e.g. Afghanistan it looks like the age slowly increases over the years. 
+
+<img width="480" height="430" alt="image" src="https://github.com/user-attachments/assets/9e383c7d-d379-4eca-a483-aeba40c4b6b2" />
 
