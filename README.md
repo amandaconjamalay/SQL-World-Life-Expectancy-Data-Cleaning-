@@ -107,5 +107,35 @@ AND t2.Status = 'Developed'
 
 When looking at the data e.g. Afghanistan it looks like the age slowly increases over the years. 
 
-<img width="480" height="430" alt="image" src="https://github.com/user-attachments/assets/9e383c7d-d379-4eca-a483-aeba40c4b6b2" />
+
+<img width="380" height="330" alt="image" src="https://github.com/user-attachments/assets/9e383c7d-d379-4eca-a483-aeba40c4b6b2" />
+
+This query will fill in the mssing life expentacny values by taking the previous year and next year for the same country, average them, and use that as the missing year's value. 
+* ```t1``` - the row with the missing life expectancy (the one we want to fix).
+* ```t2``` - the previous year row (same country).
+* ```t3``` - the next year row (same country).
+* ```ROUND((t2.`Life expectancy` + t3.`Life expectancy`)/2, 1)``` - the calculate average.
+
+
+```MySQL
+SELECT t1.Country, t1.Year, t1.`Life expectancy`, 
+t2.Country, t2.Year, t2.`Life expectancy`,
+t3.Country, t3.Year, t3.`Life expectancy`,
+ROUND((t2.`Life expectancy` + t3.`Life expectancy`)/2, 1)	
+FROM world_life_expectancy t1
+JOIN world_life_expectancy t2 
+	ON t1.Country = t2.Country
+    AND t1.Year = t2.Year - 1
+JOIN world_life_expectancy t3 
+	ON t1.Country = t3.Country
+    AND t1.Year = t3.Year + 1
+WHERE t1.`Life expectancy` = ''
+;
+```
+A self join is put in place and when we compare the life expectancy against the other tables we are able to see the last year and next year on the same row line.
+
+<img width="1287" height="144" alt="image" src="https://github.com/user-attachments/assets/03384775-4d19-463f-9676-53ed2b56b59f" />
+
+Now we can update the table:
+
 
